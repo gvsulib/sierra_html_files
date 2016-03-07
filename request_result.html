@@ -1,0 +1,67 @@
+<!--{toplogo}-->
+
+<!--{iferror}-->
+<div id="terrible-error">
+<!-- WOW GUYS THESE ERRORS DO NOT MAKE SENSE. LET'S FIX THEM -->
+<style>
+#terrible-error .please-do-not-display { display: none; }
+</style>
+<h3>Whoops!</h3>
+<p>Sorry, but we weren't able to request that right now. Get in touch right away so we can fix it:</p>
+<div class="line">
+<div class="span4 unit left">
+<a href="mailto:library@gvsu.edu" class="status-button" title="Email us at library@gvsu.edu">library@gvsu.edu</a>
+</div>
+<div class="span4 unit left">
+<a href="tel:6163313500" class="status-button" title="Call us at 616-331-3500">(616) 331-3500</a>
+</div>
+<div class="span4 unit left">
+<div class="needs-js">&nbsp;</div>
+<div class="libraryh3lp" jid="gvsulibs-queue@chat.libraryh3lp.com" style="display: none;">
+<a class="status-button" href="#" onclick="window.open('https://libraryh3lp.com/chat/gvsulibs-queue@chat.libraryh3lp.com?skin=16489', 'chat', 'resizable=1,width=320,height=200'); return false;">
+<span class="chat chat-online">Chat now </span>
+</a>
+</div>
+<div class="libraryh3lp" style="display: none;">
+<a class="status-button" href="http://gvsu.edu/chat">
+<span class="chat chat-offline">Chat is Offline</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Send some details about this error to the Web Services Librarian -->
+<!--{patron}-->
+<div id="patron_info" style="display:none;">
+<!--{patroninfo}-->
+</div>
+<script>
+var patronURL = document.getElementById('account-information').innerHTML;
+patronLinks = patronURL.split("/");
+var patronAccount = patronLinks[2];
+var browser = encodeURIComponent(navigator.userAgent);
+var urlpath = encodeURIComponent(window.location);
+var newImg = document.createElement('img');
+newImg.src = '//gvsulib.com/labs/iii/locked.php?name=' + patronAccount + '&browser=' + browser + '&url=' + urlpath;
+document.body.appendChild(newImg);
+</script>
+<div class="please-do-not-display">
+<!--{errormsg}-->
+</div>  
+</div>
+<br />
+<!--{else}-->
+
+<!--{successmsg}-->
+<!--{xif}-->
+<br />
+<br />
+<!--{ifpickuploc}-->
+ You will be notified when your request is available for pickup at
+<!--{pickuploc}-->
+<!--{xif}-->
+<div class="line" style="margin-top:1.5em;">
+<!--{ret2browse}-->
+</div>
+<!--End of main page content-->
+<!--{botlogo}-->
+

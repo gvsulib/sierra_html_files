@@ -1,0 +1,73 @@
+<!--{toplogo}-->
+<h2>Find Books &amp; Media at <abbr title="Grand Valley State University">GVSU</abbr></h2>
+
+<!-- Start of GVSU Catalog Search code -->
+<form action="//library.catalog.gvsu.edu/search/" id="querybox" method="get" name="querybox" class="lib-book-form">
+<div class="row">
+		<select name="searchtype">
+			<optgroup label="----------------">
+				<option selected="selected" value="X">Keyword</option>
+				<option value="t">Title</option>
+				<option value="a">Author</option>
+				<option value="s">Journal Title</option>
+				<option value="d">Subject</option>
+			</optgroup>
+			<optgroup label="----------------">
+				<option value="c">Call Number</option>
+				<option value="i">ISBN/ISSN</option>
+				<option value="j">Medical Subject
+				<option value="g">Government Doc no.</option>
+			</optgroup>
+		</select>
+		<input id="searcharg" name="searcharg" placeholder="Search the Catalog" type="text" />
+		<input class="lib-button-wide" type="submit" value="Search" />
+		<br />
+		<a href="http://library.catalog.gvsu.edu/search/X" title="Advanced Search in the Library Catalog" id="adv-link">Advanced Search</a>
+</div>
+		<input name="SORT" type="hidden" value="D" />
+</form>
+<!-- End of GVSU SCatalog Search code -->
+
+<script>
+			window.onload = function() {
+  				document.getElementById("searcharg").focus();
+			}
+</script>
+<div class="cms-clear"></div>
+
+
+<hr />
+<div class="row">
+	<h2 style="text-align: center; margin-bottom: .5em; padding-bottom: .5em;">Books at <abbr title="Grand Valley State University">GVSU</abbr></h2>
+	<div class="span1">
+		<h3>My Account</h3>
+		<ul class="library-list">
+			<li><a href="http://gvsu.edu/library/renew">Renew Books Online</a></li>
+			<li><a href="http://gvsu.edu/library/policies">Borrowing Policies</a></li>
+			<li><a href="http://gvsu.edu/library/purchase">Suggest a Purchase</a></li>
+		</ul>
+	</div>
+	<div class="span1">
+		<h3>Find Books by Category</h3>
+		<ul class="library-list">
+			<li><a href="http://library.catalog.gvsu.edu/search~S19/X?SEARCH=(*)&SORT=D&searchscope=8">Browse All Popular Reading Books</a></li>
+			<li><a href="http://library.catalog.gvsu.edu/search~S19/X?SEARCH=(*)&SORT=D&b=mir">Mary Idema Pew Popular Reading</a></li>
+			<li><a href="http://library.catalog.gvsu.edu/search~S19/X?SEARCH=(*)&SORT=D&b=stc">Steelcase Popular Reading</a></li>
+			<li><a href="http://library.catalog.gvsu.edu/search/X?NOSRCH=()&amp;SORT=D&amp;b=wwb">Search <abbr title="Grand Valley State University">GVSU</abbr> for eBooks</a></li>
+		</ul>
+	</div>
+	<div class="span1">
+		<h3>Find Books &amp; Media at Other Libraries</h3>
+			<ul class="library-list">
+				<li><a href="http://elibrary.mel.org/search/X?&amp;SORT=D&amp;backlink=http://library.catalog.gvsu.edu:80/search~S17?/X?&amp;SORT=D">Search the Michigan eLibrary (<abbr title="Michigan eLibrary">MeL</abbr>)</a></li>
+				<li><a href="http://worldcat.org">Search Worldcat for books <abbr title="Grand Valley State University">GVSU</abbr> doesn&rsquo;t own</a></li>
+				<li><a href="http://books.google.com">Search Google Books</a></li>
+			</ul>
+		<ul class="library-list">
+			
+		</ul>
+	</div>
+</div>
+<!--{botlogo}-->
+</body>
+</html>

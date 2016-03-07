@@ -1,0 +1,152 @@
+<!--{toplogo}-->
+<!--{patron}-->
+
+<div class="patronName">
+<!--{patroninfo}-->
+</div>
+<!--{iffines}-->
+<style>.lib-error.fines a { font-size: 1.2em;font-weight:bold;color:#333 !important;}</style>
+<div class="lib-error fines">
+<!--{finesbtn}-->
+</div>
+<!--{xif}-->
+
+<div class="row myaccount">
+<div class="span1" id="myaccount-out">
+<!--{chkoutsbtn}-->
+</div>
+<div class="span2" id="myaccount-request">
+<!--{holdsbtn}-->
+</div>
+</div>
+<div class="row">
+<div class="span3" id="myaccount-tools">
+<ul class="lib-horizontal-list">
+<li><strong>My Tools:</strong></li>
+<!--{patfeeds}-->
+<!--{ifmodifypin}-->
+<li>
+<!--{modifypinbtn}-->
+</li>
+<!--{xif}-->
+<!--{ifmsgs}-->
+<li>
+<!--{msgsbtn}-->
+</li>
+<!--{xif}-->
+<!--{ifmodifypatinfo}-->
+<li>
+<!--{modifypatinfobtn}-->
+</li>
+<!--{xif}-->
+<!--{ifpsearch}-->
+<li>
+<!--{psearchbtn}-->
+</li>
+<!--{xif}-->
+<!--{ifmffav}-->
+<li>
+<!--{mffavbtn}-->
+</li>
+<!--{xif}-->
+<!--{ifcirchist}-->
+<li>
+<!--{circhistbtn}-->
+</li>
+<!--{xif}-->
+<!{u2011}{u2011}{ifpatreview}{u2011}{u2011}>
+<li>
+<!{u2011}{u2011}{patreviewbtn}{u2011}{u2011}>
+</li>
+<!{u2011}{u2011}{xif}{u2011}{u2011}>
+<!--{ifmylists}-->
+<li>
+<!--{mylists}-->
+</li>
+<!--{xif}-->
+<!--{ifprogreg}-->
+<li>
+<!--{progregcal}-->
+</li>
+<!--{xif}-->
+</ul>
+</div>
+</div>
+
+<div style="clear:both;margin-bottom:2em;"></div>
+
+<div class="patFuncArea row lib-table">
+<!--{patfunc}-->
+</div>
+<!--{botlogo}-->
+<style>
+.patronName { color: #575757; margin:-1em 0 2em 0; }
+.patronName strong { font-weight: bold; font-size: 1.6em;color: #333 !important;}
+/* Hide top row of buttons */
+.patFuncArea span.patFunc a img { display: none; }
+.myaccount div { background-color: #ddd; margin-bottom: 1em;}
+#myaccount-out,#myaccount-request { font-size: 1.5em; font-weight: bold;text-align:center;padding: .7em 0;}
+
+.patFuncBarcode,
+#checkout_form table tr.patFuncHeaders th:nth-child(3) { display: none; }
+table.patFunc { margin: 1.5em 0; }
+#myaccount-tools li:nth-child(4) { display:none; }
+#myaccount-tools ul.lib-horizontal-list { list-style:none;}
+.loggedIn{display:none;}
+th.patFuncTitle {
+    background: #00549D;
+    color: #fff;
+    font-weight: normal;
+    text-transform: lowercase;
+}
+tr.patFuncEntry:nth-of-type(even) {
+    background-color: #eee;
+}
+.patFuncHeaders {
+    background-color: #eee;
+    font-weight: normal;
+    font-size: .85em;
+}
+.patFuncStatus,
+.patFuncCallNo { font-size: .85em;}
+@media screen and (min-width:600px) {
+	#myaccount-tools ul.lib-horizontal-list li { float: left !important;font-size: 1.2em; }
+#myaccount-tools li { margin-right: 1em; }
+
+}
+@media screen and (max-width: 56.25em) {
+#myaccount-out { border-right: none; height: auto;}
+}
+</style>
+<script>
+	String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+// Fix patron name to make it readable
+var patronFullName = $("#patronName").text();
+var patronNameBits = patronFullName.split(", ");
+var newPatronName = patronNameBits[1] + ' ' + patronNameBits[0];
+$("#patronName").text(newPatronName);
+$(".patronName").find("strong").text(newPatronName);
+// Fill in checked out items values
+
+if($("#checkout_form").length > 0) {
+console.log('This is the checked out items screen.');
+var itemsOutText = $("tr.patFuncTitle").find("th.patFuncTitle").text();
+itemsOutText = itemsOutText.toProperCase();
+$("#myaccount-out").text(itemsOutText);
+}
+if($("#hold_form").length > 0) {
+console.log('This is the requested items screen.');
+var itemsOutText = $("tr.patFuncTitle").find("th.patFuncTitle").text();
+itemsOutText = itemsOutText.toProperCase();
+$("#myaccount-request").text(itemsOutText);
+}
+if($('#renew-selected').length > 0) {
+	console.log('Add an extra Renew Selected Button to the top of this table');
+	var renewSelectedButton = $('#renew-selected').parent('a');
+
+}
+</script>
+</body>
+</html>

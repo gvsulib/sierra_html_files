@@ -1,0 +1,374 @@
+<!--{toplogo}-->
+<!--
+
+#################################
+
+This page is a placebo login, since III doesn't allow ASRS requests to route through an
+external login system (like LDAP or CAS). This makes no sense, but fits along with how
+III does things. Some day they will hire a grown up or two to write software, but in the
+meantime, I'm patching this silliness with a "placebo" login. It doesn't *really* log you 
+in to your account, but rather replicates the login screen to make it seem like you are
+logging in. It ignores whatever you type in the password screen, and in fact erases it
+before the POST request is sent to the server. This should encourage folks to type their
+correct information into the form rather than whatever suits their fancy.
+
+If a user is alreadt logged in, then they are simply asked to select the pickup location.
+
+In order that folks do not have to do this over and over if they are *not* logged in, I
+store a cookie with the username and pickup location they entered. 
+
+#################################
+
+-->
+
+<form method="post" id="asrsform">
+
+
+<div class="row" id="login-panel">
+<h2 class="center">Log in to your Library Account</h2>
+
+<div class="span2 cms-chunk-html" id="gvsu-login">
+<fieldset>
+<legend id="login-heading">GVSU Users:</legend>
+<!--{iferrmsg}-->
+<span id="user-error">
+<!--{iferrmsgisPIN}-->
+<!--{newpinmsg}-->
+<!--{else}-->
+<!--{errmsg}-->
+<!--{xif}-->
+</span>
+<!--{xif}-->
+<form name="patform" class="unpadded">
+
+<label for="name" id="userLabel"><abbr title="Grand Valley State University">GVSU</abbr> Username:</label>
+<!--{name}-->
+
+<label for="password" id="pwLabel"><abbr title="Grand Valley State University">GVSU</abbr> Password:</label>
+<input name="pass" id="pass" type="password" />
+
+<p class="help" id="forgot-pw"><a href="https://www.gvsu.edu/it/helpdesk/student-network-password-reset-47.htm" target="_blank">Forgot Your Password?</a></p>
+<span id="barcode-container"></span>
+
+<button class="btn btn-primary" name="login" id="placebosubmit">GVSU Log In</button>
+</fieldset>
+</div>
+
+<div class="span1 cms-chunk-html" id="alumni-login">
+<fieldset>
+<legend>Visitor &amp; Alumni:</legend>
+
+<label for="name">Last Name:</label>
+<input name="name" id="name" type="text" />
+
+<label for="code">Library Barcode:</label>
+<input name="code" id="code" type="password" />
+<p class="help" id="barcode-help"><a href="http://help.library.gvsu.edu/faq/70733">Where do I find my barcode?</a></p>
+<button class="btn btn-default btn-sm" name="submit" id="comm_submit">Visitor &amp; Alumni Log In</button>
+
+</fieldset>
+
+</div>
+</div><!-- End .row -->
+
+<div id="location">
+
+<div id="confirmation-statement"></div>
+
+<label for="pickup">Please choose your pickup location:</label><br />
+<select name="pickup" id="pickup">
+<option value="mi">Mary Idema Pew Library</option>
+<option value="st">Steelcase Library</option>
+<option value="fy">Frey Foundation Learning Center</option>
+<option value="ocp">Off-Campus Pickup</option>
+</select>
+<br />
+<p>&nbsp;</p>
+<p>
+<!--{submit}-->
+</p>
+
+<p>Your item will be ready at the Service Desk in just a few minutes or up to 24 hours if the item needs to be shipped from another library location. If your item is shipped, you will receive an e-mail notification when it is ready.</p>
+<p>If you have any questions please call us at 616-331-3500, or <a href="http://labs.library.gvsu.edu/labs/chat" target="_blank">chat during normal hours</a>.</p>
+</div>
+
+</form>
+
+<style>
+#login-panel {
+	background-color: #fff;
+	padding: 0 2em 2em;
+}
+
+#login-panel label,
+#login-panel input[type="text"],
+#login-panel input[type="password"]
+#login-panel input[name="name"] {
+	display: block;
+}
+
+#login-panel.has-js input[type="text"],
+#login-panel.has-js input[type="password"],
+#login-panel input[name="name"] {
+	border: 1px solid #bbb;
+	width: 98%;
+	padding: .5em 1%;
+}
+
+#login-panel label {
+	margin-top: 1.5em;
+	font-weight: bold;
+}
+
+#login-panel button {
+		margin: 1.5em 0;
+}
+
+#login-panel.has-js button {
+
+	float: right;
+}
+
+#login-panel p.help {
+	font-size: 12px;
+}
+
+#login-panel h2 { 
+	margin: 0;
+	text-align: center;
+}
+
+#login-panel.has-js fieldset {
+	margin: 2em 0 0;
+}
+
+#login-panel.has-js fieldset legend {
+	display:block;
+	width: 100%;
+	margin-left: -1em;
+}
+
+#login-panel.has-js {
+	width: 90%;
+	margin: auto;
+}
+
+#login-panel.has-js legend {
+	display:block;
+	background-color: #0065a4;
+	color: #fff;
+	padding: .5em 1em;
+}
+
+#login-panel .cms-chunk-html fieldset {
+	height: 20em;
+}
+
+#login-panel.has-js fieldset {
+	border: none;
+}
+
+.clear {
+	clear: both;
+}
+
+#visitorChange {
+	text-align: center;
+}
+
+hr {
+	display: block;
+	margin: 2em auto;
+}
+
+@media screen and (min-width: 600px) {
+	#login-panel.has-js {
+		width: 70%;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	#login-panel.has-js {
+		width: 30em;
+	}
+}
+
+</style>
+<script>
+
+
+// First, check to see if there is a cookie with the username and pickup location? Set the forms 
+// to those defaults
+
+/*
+if(readCookie('name')) {
+	console.log('There is a cookie.');
+
+	document.getElementById('name').value = readCookie('name');
+	document.getElementById('pickup').value = readCookie('pickup')
+} else {
+	console.log('No cookie');
+}
+*/
+
+// Now check to see if the user is already logged in. If so, don't show the login screen at all
+
+var setName = document.getElementById('name').value;
+if(setName.length > 0) {
+
+// Either logged in or already gone through placebo login
+
+var loggedIn = true;
+
+// Hide login form
+document.getElementById('login-panel').style.display = 'none';
+document.getElementById('confirmation-statement').innerHTML = '<p>You are logged in as ' + document.getElementById('name').value + '</p>';
+} else {
+
+var loggedIn = false;
+
+// Hide the second step
+document.getElementById('location').style.display = 'none';
+
+// This script helps reformat the login screen for usability
+var visitorUser = 'name', visitorPass = 'code', gvsuUser = 'name', gvsuPass = 'pass', gNo;
+var loginPanel = document.getElementById('login-panel');
+var loginHeading = document.getElementById('login-heading');
+
+// Store the barcode help paragraph, append it to the login form
+var barcodeHelp = document.getElementById('barcode-help');
+barcodeHelp.style.display = 'none';
+document.getElementById('barcode-container').appendChild(barcodeHelp);
+
+
+// Remove the "Visitors and Alumni login" section
+var alumniLogin = document.getElementById('alumni-login');
+loginPanel.removeChild(alumniLogin);
+
+// Now change the styles of the GVSU login, so it isn't off to the side
+loginPanel.className = 'has-js';
+
+// Now add a toggle to switch to the visitor and alumni login form
+
+var alumnToggle = document.createElement('div');
+alumnToggle.id = 'visitorChange';
+alumnToggle.innerHTML = '<div class="clear"></div><hr class="separator" /><div class="btn btn-default" id="toggle">Visitor &amp; Alumni Log In</div>';
+
+document.getElementById('gvsu-login').className = '';
+
+alumnToggle.addEventListener('mousedown',function() {
+	var toggleDiv = document.getElementById('toggle');
+	if(document.getElementById('gvsu-login')) { // switch to visitor login
+		document.getElementById('gvsu-login').id = 'visitor-login';
+		// Switch the input fields
+		document.getElementById('placebosubmit').innerHTML = 'Visitor & Alumni Log In';
+		// Switch the labels
+		document.getElementById('userLabel').innerHTML = 'Your Last Name:';
+		document.getElementById('pwLabel').innerHTML = 'Your Library Barcode:';
+		document.getElementById('forgot-pw').style.display = 'none';
+		barcodeHelp.style.display = 'block';
+
+		// Switch the heading
+		loginHeading.innerHTML = 'Visitor &amp; Alumni:';
+		loginHeading.style.backgroundColor = '#ddd';
+		loginHeading.style.color = '#333';
+		// Switch the toggle
+		toggleDiv.innerHTML = 'GVSU User Log In';
+	} else { // switch to gvsu login
+		document.getElementById('visitor-login').id = 'gvsu-login';
+		// Switch the input fields
+		document.getElementById('placebosubmit').innerHTML = 'GVSU Log In';
+		// Switch the labels
+		document.getElementById('userLabel').innerHTML = '<abbr title="Grand Valley State University">GVSU</abbr> Username:';
+		document.getElementById('pwLabel').innerHTML = '<abbr title="Grand Valley State University">GVSU</abbr> Password:';
+		document.getElementById('forgot-pw').style.display = 'block';
+		barcodeHelp.style.display = 'none';
+
+		// Switch the heading
+		loginHeading.innerHTML = 'GVSU Users:';
+		loginHeading.style.backgroundColor = '#0065a4';
+		loginHeading.style.color = '#fff';
+		// Switch the toggle
+		toggleDiv.innerHTML = 'Visitor &amp; Alumni Log In';
+	}
+	
+});
+
+loginPanel.appendChild(alumnToggle);
+
+// Check for possible G#s in the username field
+document.getElementById('name').addEventListener('keyup', function() {
+	//console.log('Testing input...' + this.value);
+	if((this).value.length > 2) {
+		var subslice = this.value.substr(0,3);
+
+		console.log('Testing against regex...');
+
+		var p = new RegExp('(G|[0-9])([0-9]+)','i');
+		if(p.exec(subslice) != null) {
+			console.log('This looks like a G Number');
+			document.getElementById('user-error').innerHTML = '<div class="alert alert-danger">Log in with your GVSU Blackboard ID, not your G Number.</div>';
+		} else {
+			console.log('Not a G Number');
+		}
+	}
+});
+
+// On "submitting" the login, move to the drop-down "page"
+
+document.getElementById('placebosubmit').addEventListener('click', function(e) {
+	e.preventDefault();
+	console.log('Submitting the login form');
+
+	// Hide the login form
+
+	document.getElementById('login-panel').style.display = "none";
+
+	// Show the pickup form
+
+	document.getElementById('location').style.display = "block";
+
+	// Show the confirmation statement
+
+	document.getElementById('confirmation-statement').innerHTML = '<p>You are logged in as ' + document.getElementById('name').value + '</p>';
+
+});
+
+}
+
+// On submit, set a cookie if not logged in
+
+//document.getElementById('asrsform').addEventListener('submit', submitForm, true);
+/*
+function submitForm() {
+	//e.preventDefault();
+	if(loggedIn === false) {
+
+	var userName = document.getElementById('name').value;
+	var pickup = document.getElementById('pickup').value;
+  	document.cookie = "name=" + userName; 
+  	document.cookie = "pickup=" + pickup;
+	
+	}
+
+	return true;
+
+}
+*/
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+
+</script>
+<!--{botlogo}-->
+</body>
+</html>

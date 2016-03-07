@@ -1,0 +1,295 @@
+<!--{toplogo}-->
+<form name="patform" method="post" id="patform">
+
+
+<div class="row" id="login-panel">
+<h2 class="center">Log in to your Library Account</h2>
+
+<div class="span2 cms-chunk-html" id="gvsu-login">
+<fieldset>
+<legend id="login-heading">GVSU Users:</legend>
+<!--{iferrmsg}-->
+<span id="user-error">
+<!--{iferrmsgisPIN}-->
+<!--{newpinmsg}-->
+<!--{else}-->
+<!--{errmsg}-->
+<!--{xif}-->
+</span>
+<!--{xif}-->
+<form name="patform" method="POST" class="unpadded ">
+
+<label for="extpatid" id="userLabel"><abbr title="Grand Valley State University">GVSU</abbr> Username:</label>
+<input name="extpatid" id="extpatid" type="text" />
+
+<label for="extpatpw" id="pwLabel"><abbr title="Grand Valley State University">GVSU</abbr> Password:</label>
+<input name="extpatpw" id="extpatpw" type="password" />
+
+<p class="help" id="forgot-pw"><a href="https://www.gvsu.edu/it/helpdesk/student-network-password-reset-47.htm" target="_blank">Forgot Your Password?</a></p>
+<span id="barcode-container"></span>
+
+<input type="submit" class="btn btn-primary" value="GVSU Log In" name="submit" id="submit">
+</fieldset>
+</div>
+
+<div class="span1 cms-chunk-html" id="alumni-login">
+<fieldset>
+<legend>Visitor &amp; Alumni:</legend>
+
+<label for="name">Last Name:</label>
+<input name="name" id="name" type="text" />
+
+<label for="code">Library Baarcode:</label>
+<input name="code" id="code" type="password" />
+<p class="help" id="barcode-help"><a href="http://help.library.gvsu.edu/faq/70733">Where do I find my barcode?</a></p>
+<input type="submit" class="btn btn-default btn-sm" value="Visitor &amp; Alumni Log In" name="submit" id="comm_submit"/>
+
+</fieldset>
+
+</div>
+</div><!-- End .row -->
+
+</form>
+
+<style>
+#login-panel {
+	background-color: #fff;
+	padding: 0 2em 2em;
+}
+
+#login-panel label,
+#login-panel input[type="text"],
+#login-panel input[type="password"] {
+	display: block;
+}
+
+#login-panel.has-js input[type="text"],
+#login-panel.has-js input[type="password"] {
+	border: 1px solid #bbb;
+	width: 98%;
+	padding: .5em 1%;
+}
+
+#login-panel label {
+	margin-top: 1.5em;
+	font-weight: bold;
+}
+
+#login-panel input[type="submit"] {
+		margin: 1.5em 0;
+}
+
+#login-panel.has-js input[type="submit"] {
+
+	float: right;
+}
+
+#login-panel p.help {
+	font-size: 12px;
+}
+
+#login-panel h2 { 
+	margin: 0;
+	text-align: center;
+}
+
+#login-panel.has-js fieldset {
+	margin: 2em 0 0;
+}
+
+#login-panel.has-js fieldset legend {
+	display:block;
+	width: 100%;
+	margin-left: -1em;
+}
+
+#login-panel.has-js {
+	width: 90%;
+	margin: auto;
+}
+
+#login-panel.has-js legend {
+	display:block;
+	background-color: #0065a4;
+	color: #fff;
+	padding: .5em 1em;
+}
+
+#login-panel .cms-chunk-html fieldset {
+	height: 20em;
+}
+
+#login-panel.has-js fieldset {
+	border: none;
+}
+
+.clear {
+	clear: both;
+}
+
+#visitorChange {
+	text-align: center;
+}
+
+hr {
+	display: block;
+	margin: 2em auto;
+}
+
+@media screen and (min-width: 600px) {
+	#login-panel.has-js {
+		width: 70%;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	#login-panel.has-js {
+		width: 30em;
+	}
+}
+
+</style>
+<script>
+
+// This script helps reformat the login screen for usability
+var visitorUser = 'name', visitorPass = 'code', gvsuUser = 'extpatid', gvsuPass = 'extpatpw', gNo;
+var loginPanel = document.getElementById('login-panel');
+var loginHeading = document.getElementById('login-heading');
+
+// Store the barcode help paragraph, append it to the login form
+var barcodeHelp = document.getElementById('barcode-help');
+barcodeHelp.style.display = 'none';
+document.getElementById('barcode-container').appendChild(barcodeHelp);
+
+
+// Remove the "Visitors and Alumni login" section
+var alumniLogin = document.getElementById('alumni-login');
+loginPanel.removeChild(alumniLogin);
+
+// Now change the styles of the GVSU login, so it isn't off to the side
+loginPanel.className = 'has-js';
+
+// Now add a toggle to switch to the visitor and alumni login form
+
+var alumnToggle = document.createElement('div');
+alumnToggle.id = 'visitorChange';
+alumnToggle.innerHTML = '<div class="clear"></div><hr class="separator" /><div class="btn btn-default" id="toggle">Visitor &amp; Alumni Log In</div>';
+
+document.getElementById('gvsu-login').className = '';
+
+alumnToggle.addEventListener('mousedown',function() {
+	var toggleDiv = document.getElementById('toggle');
+	if(document.getElementById('gvsu-login')) { // switch to visitor login
+		document.getElementById('gvsu-login').id = 'visitor-login';
+		// Switch the input fields
+		document.getElementById(gvsuUser).name = visitorUser;
+		document.getElementById(gvsuUser).id = visitorUser;
+		document.getElementById(gvsuPass).name = visitorPass;
+		document.getElementById(gvsuPass).id = visitorPass;
+		document.getElementById('submit').value = 'Visitor & Alumni Log In';
+		// Switch the labels
+		document.getElementById('userLabel').innerHTML = 'Your Last Name:';
+		document.getElementById('userLabel').setAttribute('for', visitorUser);
+		document.getElementById('pwLabel').innerHTML = 'Your Library Barcode:';
+		document.getElementById('pwLabel').setAttribute('for', visitorPass);
+		document.getElementById('forgot-pw').style.display = 'none';
+		barcodeHelp.style.display = 'block';
+
+		// Switch the heading
+		loginHeading.innerHTML = 'Visitor &amp; Alumni:';
+		loginHeading.style.backgroundColor = '#ddd';
+		loginHeading.style.color = '#333';
+		// Switch the toggle
+		toggleDiv.innerHTML = 'GVSU User Log In';
+	} else { // switch to gvsu login
+		document.getElementById('visitor-login').id = 'gvsu-login';
+		// Switch the input fields
+		document.getElementById(visitorUser).name = gvsuUser;
+		document.getElementById(visitorUser).id = gvsuUser;
+		document.getElementById(visitorPass).name = gvsuPass;
+		document.getElementById(visitorPass).id = gvsuPass;
+		document.getElementById('submit').value = 'GVSU Log In';
+		// Switch the labels
+		document.getElementById('userLabel').innerHTML = '<abbr title="Grand Valley State University">GVSU</abbr> Username:';
+		document.getElementById('userLabel').setAttribute('for', gvsuUser);
+		document.getElementById('pwLabel').innerHTML = '<abbr title="Grand Valley State University">GVSU</abbr> Password:';
+		document.getElementById('pwLabel').setAttribute('for', gvsuPass);
+		document.getElementById('forgot-pw').style.display = 'block';
+		barcodeHelp.style.display = 'none';
+
+		// Switch the heading
+		loginHeading.innerHTML = 'GVSU Users:';
+		loginHeading.style.backgroundColor = '#0065a4';
+		loginHeading.style.color = '#fff';
+		// Switch the toggle
+		toggleDiv.innerHTML = 'Visitor &amp; Alumni Log In';
+	}
+	
+});
+loginPanel.appendChild(alumnToggle);
+
+// Check for possible G#s in the username field
+document.getElementById('extpatid').addEventListener('keyup', function() {
+	//console.log('Testing input...' + this.value);
+	if((this).value.length > 2) {
+		var subslice = this.value.substr(0,3);
+
+		console.log('Testing against regex...');
+
+		var p = new RegExp('(G|[0-9])([0-9]+)','i');
+		if(p.exec(subslice) != null) {
+			console.log('This looks like a G Number');
+			document.getElementById('user-error').innerHTML = '<div class="alert alert-danger">Log in with your GVSU Blackboard ID, not your G Number.</div>';
+		} else {
+			console.log('Not a G Number');
+		}
+	}
+});
+
+// Check for possible barcodes in the password field.
+document.getElementById(gvsuPass).addEventListener('keyup', function(e) {
+	if(this.value.length > 5) {
+		var passString = this.value.substr(0, 5);
+		var p2 = new RegExp('([0-9]{5})');
+		if(p2.exec(passString) != null) {
+			if(passString == '22260' || passString == '32260') {
+				console.log('This looks like a visitor or Alumni barcode');
+				document.getElementById('user-error').innerHTML = '<div class="alert alert-danger">This looks like a visitor or alumni login. <a href="#" id="error-toggle">Switch to the visitor or alumni login page</a>.</div>';
+
+				document.getElementById('error-toggle').addEventListener('mousedown', function(e) {
+					e.preventDefault();
+					document.getElementById('gvsu-login').id = 'visitor-login';
+					// Switch the input fields
+					document.getElementById(gvsuUser).name = visitorUser;
+					document.getElementById(gvsuUser).id = visitorUser;
+					document.getElementById(gvsuPass).name = visitorPass;
+					document.getElementById(gvsuPass).id = visitorPass;
+					document.getElementById('submit').value = 'Visitor & Alumni Log In';
+					// Switch the labels
+					document.getElementById('userLabel').innerHTML = 'Your Last Name:';
+					document.getElementById('userLabel').setAttribute('for', visitorUser);
+					document.getElementById('pwLabel').innerHTML = 'Your Library Barcode:';
+					document.getElementById('pwLabel').setAttribute('for', visitorPass);
+					document.getElementById('forgot-pw').style.display = 'none';
+					barcodeHelp.style.display = 'block';
+
+					// Switch the heading
+					loginHeading.innerHTML = 'Visitor &amp; Alumni:';	
+					loginHeading.style.backgroundColor = '#ddd';
+					loginHeading.style.color = '#333';
+					// Switch the toggle
+					document.getElementById('toggle').innerHTML = 'GVSU User Log In';
+					document.getElementById('user-error').style.display = 'none';
+
+				});
+			} 
+		}
+	}
+});
+
+
+
+</script>
+<!--{botlogo}-->
+</body>
+</html>

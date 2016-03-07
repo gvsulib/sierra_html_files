@@ -1,0 +1,136 @@
+<!--{toplogo}-->
+<!--{advancedsearchbody}-->
+<h2>Advanced Keyword Search</h2>
+<!--{msg}-->
+<!--{spellcheck}-->
+<!--{innreach}-->
+<div class="srchhelpText"><!--Please fill in the form, select limits, and click Submit.-->
+<div class="advSrchtool">
+<!--{advancedsearchformbegin}-->
+<div id="advanced-search">
+<!--{advancedsearch}-->
+<input type="hidden" name="startLimit" />
+<p>
+<!--{availlim}-->
+</p>
+<p>
+<!--{advancedsubmit}-->
+</p>
+<hr />
+<div id="advanced-search-table">
+<div class="row">
+<div class="span1" id="branch">
+<!--{branch}-->
+</div>
+<div class="span1" id="materialType">
+<!--{mattype}-->
+</div>
+<div class="span1" id="language">
+<!--{lang}-->
+</div>
+
+<div class="cms-clear"></div>
+</div>
+<div class="row">
+<div class="span1" id="date">
+<!--{DOCDATE}-->
+</div>
+<div class="span1" id="publisher">
+<!--{publish}-->
+</div>
+<div class="span1">
+<!--{sort}-->
+</div>
+<div class="cms-clear"></div>
+</div>
+<div class="row">
+<div class="span3">
+<!--{advancedsubmit}-->
+</div>
+<div class="cms-clear"></div>
+</div>
+</div>
+
+<input type="hidden" name="endLimit" />
+<!--{advancedsearchformend}-->
+</div>
+</div>
+</div>
+<style>
+/*
+#advanced-search {
+font-size: 100%;}
+#advanced-search-table table,
+#advanced-search-table table tr,
+#advanced-search-table table td,
+#advanced-search-table table tbody {
+display: inline;
+}
+#advanced-search-table {
+font-size: .75em;
+}
+#advanced-search-table label {
+display: block;
+}
+#advanced-search-table fieldset {
+border: none;
+padding: 0;
+}
+#advanced-search-table fieldset legend {
+display: none;
+}
+#advanced-search-table fieldset label,
+#advanced-search-table fieldset input[type="text"] {
+float: left;
+}
+#advanced-search-table fieldset input[type="text"]  {
+width: 4em;
+margin: 0 .3em;
+}*/
+#advanced-search-table label { display: block; }
+select[multiple], select[size] {
+    height: auto;
+    width: 95%;
+}
+#advanced-search-table .row { margin-bottom: 1.4em; }
+#date fieldset legend { display: none; }
+#advanced-search-table fieldset {
+border: none;
+padding: 0;
+background: transparent;
+    height: 0;
+    margin-top: -1.2em;
+width:92%;
+}
+#advanced-search-table fieldset label,
+#advanced-search-table fieldset input[type="text"] {
+float: left;
+}
+#advanced-search-table fieldset input[type="text"]  {
+width: 4em;
+margin: 0 .3em;
+}
+</style>
+<script>
+
+function stupidTables(id) {
+	var formTable = document.getElementById(id);
+	var formLabel = formTable.querySelector('td:first-child').innerHTML;
+	var formInput = formTable.querySelector('td:nth-child(2)').innerHTML;
+	console.log('About to change out ' + id);
+	formTable.innerHTML = formLabel + '&nbsp;' + formInput;
+}
+window.setTimeout(function(){
+
+stupidTables('branch');
+stupidTables('materialType');
+stupidTables('language');
+stupidTables('publisher');
+
+console.log('About to change out dates');
+document.getElementById('date').innerHTML = '<span><label for="Da">From:</label><input id="Da" type="text" name="Da" /></span><span><label for="Db">To:</label><input id="Db" type="text" name="Db" /></span>';
+
+}, 10);
+
+</script>
+<!--{botlogo}-->

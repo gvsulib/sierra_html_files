@@ -1,0 +1,163 @@
+<!--{toplogo}-->
+
+<!-- 
+III requires that JS be loaded befoer the page because they don't know how to make web pages.
+This function is in the JS loaded at the body close, but it breaks IE8 if I don't put it up here.
+-->
+
+<!--[if lt IE 10]>
+<script>
+function initSort()
+{
+if( document.searchtool.searchtype != null )
+    savedTag = document.searchtool.searchtype.options.selectedIndex;
+else savedTag = null;
+if( document.searchtool.searcharg != null )
+    savedSearch = document.searchtool.searcharg.value;
+else savedSearch = null;
+if( document.searchtool.searchscope != null )
+    savedScope = document.searchtool.searchscope.options.selectedIndex;
+else savedScope = null;
+
+if( !document.getElementById("sortdropdown") )
+	{
+	var anchorPlacement = document.getElementById("sort_cell");
+	//create sort select and add it to the DOM
+	var newSortSelect = createSelect(
+			"sortdropdown",sortTypes, sortLabels, sortSelectedValue);
+	addContent(newSortSelect, anchorPlacement );
+	if( sortButtonText != null)
+		{
+		var newSortButton = createButton(sortButtonText,"sortbutton");
+		newSortButton.onclick = eval(sortButtonEvent);
+		addContent(newSortButton, anchorPlacement);
+		}
+	}
+toggleSort();
+}
+function toggleSort()
+{
+//* added get element by id */
+var selector = document.getElementById("searchtype");
+selectedTag = selector.options[selector.options.selectedIndex].value;
+
+//* removed test for nn4 since we don't support it */
+//* added global var for sort tags */
+var sortSelect = document.getElementById("sortdropdown");
+if(sortSelect)
+	{
+	if(nonSortTags.search(selectedTag) != -1 )
+		{
+		sortSelect.className = "hideElem";
+		}
+	else
+		{
+		sortSelect.className = "showInlineElem";
+		}
+	sortSelect.options.selectedIndex = sortSelectedValue;
+	}
+var sortButton = document.getElementById("sortbutton");
+if( sortButton )
+	{
+	if(nonSortTags.search(selectedTag) != -1 )
+		{
+		sortButton.className = "hideElem";
+		}
+	else
+		{
+		sortButton.className = "showInlineElem";
+		}
+	}
+}
+function createSelect(sName,sTypes, sLabels, sSelectedValue)
+{
+    var newSelect = document.createElement("SELECT");
+    newSelect.setAttribute("name", sName);
+    //toggleSort is predicated on this id
+    newSelect.setAttribute("id", sName);
+    for(var i=0; i < sTypes.length; i++)
+    {
+        if (sSelectedValue != null && sSelectedValue == sTypes[i])
+        {
+            newSelect.selectedIndex= i;
+        }
+        newSelect.options[i] = new Option(sLabels[i],sTypes[i]);
+    }
+    return newSelect;
+}
+function addContent(nodeObj,parentNode)
+{
+    parentNode.appendChild(nodeObj);
+}
+</script>
+<![endif]-->
+
+<!--{ifbibdisplay}-->
+<!--{xif}-->
+<!--{catedit}-->
+<div id="bibDisplayBody">
+<div class="navigationrow bibScreen">
+<!--{navrow}-->
+<!--{innreach}-->
+</div>
+<div id="bibDisplayContent">
+<div class="bibSearch">
+<!--{searchtool}-->
+</div><!-- close tool -->
+<div class="bibHistoryRow">
+<div class="bibSearchHistory">
+<!--{searchhistory}-->
+</div>
+<div class="bibPager">
+<!--{pager}-->
+</div>
+</div>
+<br style="clear:both"/>
+<div style="float:right;width:10%"">
+
+<!--{ifhasresourcetable}-->
+
+<!--{xif}-->
+
+
+
+
+</div>
+<div style="width:100%;">
+<div class="coverimage">
+<!--{bibimage}-->
+</div>
+<div class="bib-record-details">
+<!--{recordinfo:!}-->
+</div>
+
+<!--{booking}-->
+<!--{holdingslink}-->
+<!--{linkeddocs}-->
+<!--{URLS}-->
+<!--{bloblinks}-->
+<!--{imagelinks}-->
+<!--{artthumb}-->
+<!--{xmlframe}-->
+
+<!--{xif}-->
+<!--{holds}-->
+<!--{holdings}-->
+<!--{items}-->
+<!--{orders}-->
+<h2 class="bareBreaker">Item Details</h2>
+<!--{TOC}-->
+<!--{recordinfo:#}-->
+<!--{recordlink}-->
+
+</div>
+</div><!-- close bibDisplayContent -->
+</div><!-- close bibDisplayBody -->
+<style>
+
+@media screen and (min-width: 600px)  {
+.coverimage { width: 20%; float: left; margin-right: 1em;}
+.bib-record-details { width: 75%; float: left; }
+}
+</style>
+<!--{botlogo}-->
